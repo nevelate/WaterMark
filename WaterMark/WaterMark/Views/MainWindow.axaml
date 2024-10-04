@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:WaterMark.Views"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WaterMark.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -31,13 +33,33 @@
       </ExperimentalAcrylicBorder.Material>
     </ExperimentalAcrylicBorder>
 
-    <Border IsHitTestVisible="False" IsVisible="False" Opacity="0.4"
-                               Name="BackgroundBorder">
-      <Border.Background>
-        <ImageBrush Source="/Assets/avalonia-logo.ico" Stretch="UniformToFill"/>
-      </Border.Background>
-    </Border>
-    
-    <views:MainView Margin="0, 28, 0, 0"/>
+    <Grid RowDefinitions="auto, *">
+      <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Image Source="/Assets/avalonia-logo.ico" Width="16" Height="16" Margin="12, 6" />
+        <Menu>
+          <MenuItem Header="Файл">
+            <MenuItem Header="_Open..."/>
+            <Separator/>
+            <MenuItem Header="_Exit"/>
+          </MenuItem>
+          <MenuItem Header="Правка">
+            <MenuItem Header="Undo"/>
+            <MenuItem Header="Redo"/>
+          </MenuItem>
+          <MenuItem Header="Вид">
+            <MenuItem Header="Тема">
+              <MenuItem Header="Как в системе" ToggleType="Radio"/>
+              <MenuItem Header="Светлая" ToggleType="Radio"/>
+              <MenuItem Header="Темная" ToggleType="Radio"/>
+            </MenuItem>
+          </MenuItem>
+          <MenuItem Header="Справка">
+
+          </MenuItem>
+        </Menu>
+      </StackPanel>
+
+      <views:MainView Grid.Row="1"/>
+    </Grid>
   </Panel>
 </Window>

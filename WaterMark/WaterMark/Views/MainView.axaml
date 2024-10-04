@@ -13,6 +13,39 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
+  <Grid ColumnDefinitions="2*, *" RowDefinitions="*, auto">
+    <Border Grid.Column="0"
+            Grid.Row="0"
+            BorderThickness="1"
+            BorderBrush="{DynamicResource SystemAccentColor}">
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource SystemAccentColor}"/>
+      <Button VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Theme="{StaticResource TransparentButton}"
+              Width="250">
+        <TextBlock Text="Open image to start"
+                   Theme="{StaticResource TitleLargeTextBlockStyle}"
+                   TextAlignment="Center"/>
+      </Button>
+    </Border>
+    <TabControl Grid.Column="1" Grid.Row="0">
+      <TabItem Header="Text">
+        <TextBlock Margin="5">This is tab 1 content</TextBlock>
+      </TabItem>
+      <TabItem Header="Image">
+        <TextBlock Margin="5">This is tab 2 content</TextBlock>
+      </TabItem>
+    </TabControl>
+    <Border Grid.ColumnSpan="2" Grid.Row="1" Height="28">
+      <Grid ColumnDefinitions="auto, *, auto, *, auto" VerticalAlignment="Center">
+        <TextBlock Grid.Column="0"
+                   Text="Image.png"
+                   Theme="{StaticResource BodyTextBlockStyle}"/>
+        <TextBlock Grid.Column="2"
+                   Text="300 428"
+                   Theme="{StaticResource BodyTextBlockStyle}"/>
+      </Grid>
+    </Border>
+  </Grid>
+  
 </UserControl>

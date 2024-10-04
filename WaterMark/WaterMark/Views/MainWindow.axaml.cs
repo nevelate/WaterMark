@@ -15,7 +15,7 @@ namespace WaterMark.Views
             TitleBar.ExtendsContentIntoTitleBar = true;
             TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
 
-            ChangeTransparency(4);
+            ChangeTransparency(3);
         }
 
         public void ChangeTransparency(int index)
@@ -23,7 +23,7 @@ namespace WaterMark.Views
             switch (index)
             {
                 case 0:
-                    if (this.TryFindResource("ApplicationPageBackgroundThemeBrush", App.Current.ActualThemeVariant, out var value))
+                    if (this.TryFindResource("ApplicationPageBackgroundThemeBrush", App.Current?.ActualThemeVariant, out var value))
                     {
                         var brush = value as SolidColorBrush;
                         Background = brush;
@@ -32,21 +32,15 @@ namespace WaterMark.Views
                     {
                         WindowTransparencyLevel.None,
                     };
-                    BackgroundBorder.IsVisible = false;
                     AccentAcrylicBorder.IsVisible = false;
                     AcrylicBorder.IsVisible = false;
                     break;
                 case 1:
-                    if (this.TryFindResource("ApplicationPageBackgroundThemeBrush", App.Current.ActualThemeVariant, out var color))
-                    {
-                        var brush = color as SolidColorBrush;
-                        Background = brush;
-                    }
+                    Background = Brushes.Transparent;
                     TransparencyLevelHint = new List<WindowTransparencyLevel>()
-                    {
-                        WindowTransparencyLevel.None,
-                    };
-                    BackgroundBorder.IsVisible = true;
+                        {
+                            WindowTransparencyLevel.Mica,
+                        };
                     AccentAcrylicBorder.IsVisible = false;
                     AcrylicBorder.IsVisible = false;
                     break;
@@ -54,11 +48,10 @@ namespace WaterMark.Views
                     Background = Brushes.Transparent;
                     TransparencyLevelHint = new List<WindowTransparencyLevel>()
                         {
-                            WindowTransparencyLevel.Mica,
+                            WindowTransparencyLevel.AcrylicBlur,
                         };
-                    BackgroundBorder.IsVisible = false;
                     AccentAcrylicBorder.IsVisible = false;
-                    AcrylicBorder.IsVisible = false;
+                    AcrylicBorder.IsVisible = true;
                     break;
                 case 3:
                     Background = Brushes.Transparent;
@@ -66,17 +59,6 @@ namespace WaterMark.Views
                         {
                             WindowTransparencyLevel.AcrylicBlur,
                         };
-                    BackgroundBorder.IsVisible = false;
-                    AccentAcrylicBorder.IsVisible = false;
-                    AcrylicBorder.IsVisible = true;
-                    break;
-                case 4:
-                    Background = Brushes.Transparent;
-                    TransparencyLevelHint = new List<WindowTransparencyLevel>()
-                        {
-                            WindowTransparencyLevel.AcrylicBlur,
-                        };
-                    BackgroundBorder.IsVisible = false;
                     AccentAcrylicBorder.IsVisible = true;
                     AcrylicBorder.IsVisible = false;
                     break;
