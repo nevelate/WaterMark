@@ -13,7 +13,7 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-  <Grid ColumnDefinitions="2*, *" RowDefinitions="*, auto">
+  <Grid ColumnDefinitions="7*, 2*" RowDefinitions="*, auto">
     <Border Grid.Column="0"
             Grid.Row="0"
             Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
@@ -55,7 +55,7 @@
               CornerRadius="4"
               Padding="12"
               IsVisible="{Binding #textToggle.IsChecked}">
-        <StackPanel Spacing="16">
+        <StackPanel Spacing="8">
           <TextBox Watermark="Your text"/>
 
           <ComboBox PlaceholderText="Font"
@@ -64,7 +64,7 @@
           </ComboBox>
 
           <ui:CommandBar Padding="0"
-                         Margin="0, -4, 0, 0">
+                         Margin="0, -4, 0, 0" IsDynamicOverflowEnabled="False">
             <ui:CommandBar.PrimaryCommands>
               <ui:CommandBarToggleButton IconSource="Bold" Label="Bold" />
               <ui:CommandBarToggleButton IconSource="Italic" Label="Italic" />
@@ -72,25 +72,22 @@
             </ui:CommandBar.PrimaryCommands>
           </ui:CommandBar>
 
-          <Grid ColumnDefinitions="*, 8, *">
-            <Grid Grid.Column="0"
-                  ColumnDefinitions="auto, *, auto">
-              <TextBlock Grid.Column="0"
-                         Text="Font size:"
-                         VerticalAlignment="Center"/>
-              <ui:NumberBox Grid.Column="2"
-                            SpinButtonPlacementMode="Compact"
-                            Value="14"/>
-            </Grid>
-            <Grid Grid.Column="2"
-                  ColumnDefinitions="auto, *, auto">
-              <TextBlock Grid.Column="0"
-                         Text="Line height:"
-                         VerticalAlignment="Center"/>
-              <ui:NumberBox Grid.Column="2"
-                            SpinButtonPlacementMode="Compact"
-                            Value="20"/>
-            </Grid>
+          <Grid ColumnDefinitions="auto, *, auto">
+            <TextBlock Grid.Column="0"
+                       Text="Font size:"
+                       VerticalAlignment="Center"/>
+            <ui:NumberBox Grid.Column="2"
+                          SpinButtonPlacementMode="Compact"
+                          Value="14"/>
+          </Grid>
+          
+          <Grid ColumnDefinitions="auto, *, auto">
+            <TextBlock Grid.Column="0"
+                       Text="Line height:"
+                       VerticalAlignment="Center"/>
+            <ui:NumberBox Grid.Column="2"
+                          SpinButtonPlacementMode="Compact"
+                          Value="20"/>
           </Grid>
           
           <Grid ColumnDefinitions="auto, *, auto">
@@ -101,13 +98,98 @@
                                   Color="Purple"/>
           </Grid>
 
+          <Grid Grid.Column="0"
+                  ColumnDefinitions="auto, *, auto">
+            <TextBlock Grid.Column="0"
+                       Text="Font size:"
+                       VerticalAlignment="Center"/>
+            <ui:NumberBox Grid.Column="2"
+                          SpinButtonPlacementMode="Compact"
+                          Value="14"/>
+          </Grid>
+          <Grid Grid.Column="2"
+                ColumnDefinitions="auto, *, auto"
+                Margin="0, 4, 0, 0">
+            <TextBlock Grid.Column="0"
+                       Text="Opacity:"
+                       VerticalAlignment="Center"/>
+            <ui:NumberBox Grid.Column="2"
+                          Name="textOpacityNumberBox"
+                          SpinButtonPlacementMode="Compact"
+                          Value="100"/>
+          </Grid>
+          
+          <Slider Value="{Binding #textOpacityNumberBox.Value}"
+                  Margin="0, -12, 0, 0"/>
+
         </StackPanel>
       </Border>
       <Border Grid.Row="1"
               Grid.ColumnSpan="2"
               Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
               CornerRadius="4"
+              Padding="12"
               IsVisible="{Binding !#textToggle.IsChecked}">
+        <StackPanel Spacing="8">
+          <Button HorizontalAlignment="Stretch"
+                  Theme="{StaticResource TransparentButton}">
+            <StackPanel>
+              <TextBlock Text="Drag &amp; drop watermark" HorizontalAlignment="Center"/>
+              <TextBlock Text="or" HorizontalAlignment="Center"/>
+              <TextBlock Text="Select from computer" HorizontalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+
+          <Grid ColumnDefinitions="auto, auto, *, auto"
+                RowDefinitions="auto, 16, auto">
+            <Panel Grid.Column="0"
+                   Grid.RowSpan="3"
+                   Margin="0, 0, 8, 0">              
+              <Border BorderThickness="1 1 0 1"
+                      CornerRadius="2"
+                      BorderBrush="{DynamicResource ControlStrokeColorOnAccentTertiaryBrush}"
+                      Margin="12, 16, -6, 16"/>
+              <ToggleButton Padding="2, 4">
+                <ui:SymbolIcon Symbol="Link"
+                               FontSize="18"
+                               RenderTransform="rotate(90deg)"/>
+              </ToggleButton>
+            </Panel>
+            
+            <TextBlock Grid.Column="1"
+                       Grid.Row="0"
+                       VerticalAlignment="Center"
+                       Text="Width:"/>
+            <ui:NumberBox Grid.Column="3"
+                          Grid.Row="0"
+                          SpinButtonPlacementMode="Compact"
+                          Value="20"/>
+
+            <TextBlock Grid.Column="1"
+                       Grid.Row="2"
+                       VerticalAlignment="Center"
+                       Text="Height:"/>
+            <ui:NumberBox Grid.Column="3"
+                          Grid.Row="2"
+                          SpinButtonPlacementMode="Compact"
+                          Value="10"/>
+          </Grid>
+          
+          <Grid Grid.Column="2"
+                ColumnDefinitions="auto, *, auto"
+                Margin="0, 4, 0, 0">
+            <TextBlock Grid.Column="0"
+                       Text="Opacity:"
+                       VerticalAlignment="Center"/>
+            <ui:NumberBox Grid.Column="2"
+                          Name="opacityNumberBox"
+                          SpinButtonPlacementMode="Compact"
+                          Value="100"/>
+          </Grid>
+
+          <Slider Value="{Binding #opacityNumberBox.Value}"
+                  Margin="0, -12, 0, 0"/>
+        </StackPanel>
       </Border>
       <Border Grid.Row="2"
               Grid.ColumnSpan="2"
