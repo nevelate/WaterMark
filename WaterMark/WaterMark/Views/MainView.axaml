@@ -16,36 +16,153 @@
   <Grid ColumnDefinitions="2*, *" RowDefinitions="*, auto">
     <Border Grid.Column="0"
             Grid.Row="0"
-            BorderThickness="1"
-            BorderBrush="{DynamicResource SystemAccentColor}">
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="4"
+            Margin="4">
 
       <Button VerticalAlignment="Center"
               HorizontalAlignment="Center"
-              Theme="{StaticResource TransparentButton}"
-              Width="250">
-        <TextBlock Text="Open image to start"
-                   Theme="{StaticResource TitleLargeTextBlockStyle}"
-                   TextAlignment="Center"/>
+              Theme="{StaticResource TransparentButton}">
+        <StackPanel>
+          <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="Drag &amp; drop image" HorizontalAlignment="Center"/>
+          <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="or" HorizontalAlignment="Center"/>
+          <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="Select file from computer" HorizontalAlignment="Center"/>
+        </StackPanel>
       </Button>
     </Border>
-    <TabControl Grid.Column="1" Grid.Row="0">
-      <TabItem Header="Text">
-        <TextBlock Margin="5">This is tab 1 content</TextBlock>
-      </TabItem>
-      <TabItem Header="Image">
-        <TextBlock Margin="5">This is tab 2 content</TextBlock>
-      </TabItem>
-    </TabControl>
-    <Border Grid.ColumnSpan="2" Grid.Row="1" Height="28">
-      <Grid ColumnDefinitions="auto, *, auto, *, auto" VerticalAlignment="Center">
-        <TextBlock Grid.Column="0"
+
+    <Grid Grid.Column="1"
+          Grid.Row="0"
+          RowDefinitions="auto, *, auto"
+          ColumnDefinitions="*, *"
+          Margin="4">
+      <ToggleButton Grid.Row="0"
+                    Grid.Column="0"
+                    Name="textToggle"
+                    Content="Text"
+                    HorizontalAlignment="Stretch"
+                    Margin="0, 0, 4, 8"
+                    IsChecked="True"/>
+      <ToggleButton Grid.Row="0"
+                    Grid.Column="1"
+                    Content="Image"
+                    HorizontalAlignment="Stretch"
+                    Margin="4, 0, 0, 8"
+                    IsChecked="{Binding !#textToggle.IsChecked}"/>
+      <Border Grid.Row="1"
+              Grid.ColumnSpan="2"
+              Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+              CornerRadius="4"
+              Padding="12"
+              IsVisible="{Binding #textToggle.IsChecked}">
+        <StackPanel Spacing="16">
+          <TextBox Watermark="Your text"/>
+
+          <ComboBox PlaceholderText="Font"
+                    HorizontalAlignment="Stretch">
+
+          </ComboBox>
+
+          <ui:CommandBar Padding="0"
+                         Margin="0, -4, 0, 0">
+            <ui:CommandBar.PrimaryCommands>
+              <ui:CommandBarToggleButton IconSource="Bold" Label="Bold" />
+              <ui:CommandBarToggleButton IconSource="Italic" Label="Italic" />
+              <ui:CommandBarToggleButton IconSource="Underline" Label="Underline" />
+            </ui:CommandBar.PrimaryCommands>
+          </ui:CommandBar>
+
+          <Grid ColumnDefinitions="*, 8, *">
+            <Grid Grid.Column="0"
+                  ColumnDefinitions="auto, *, auto">
+              <TextBlock Grid.Column="0"
+                         Text="Font size:"
+                         VerticalAlignment="Center"/>
+              <ui:NumberBox Grid.Column="2"
+                            SpinButtonPlacementMode="Compact"
+                            Value="14"/>
+            </Grid>
+            <Grid Grid.Column="2"
+                  ColumnDefinitions="auto, *, auto">
+              <TextBlock Grid.Column="0"
+                         Text="Line height:"
+                         VerticalAlignment="Center"/>
+              <ui:NumberBox Grid.Column="2"
+                            SpinButtonPlacementMode="Compact"
+                            Value="20"/>
+            </Grid>
+          </Grid>
+          
+          <Grid ColumnDefinitions="auto, *, auto">
+            <TextBlock Grid.Column="0"
+                       Text="Color:"
+                       VerticalAlignment="Center"/>
+            <ui:ColorPickerButton Grid.Column="2"
+                                  Color="Purple"/>
+          </Grid>
+
+        </StackPanel>
+      </Border>
+      <Border Grid.Row="1"
+              Grid.ColumnSpan="2"
+              Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+              CornerRadius="4"
+              IsVisible="{Binding !#textToggle.IsChecked}">
+      </Border>
+      <Border Grid.Row="2"
+              Grid.ColumnSpan="2"
+              Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+              CornerRadius="4"
+              Margin="0, 8, 0, 0"
+              Padding="12, 8, 12, 12">
+        <Grid ColumnDefinitions="auto, *, auto"
+              RowDefinitions="*, 8, *, 8, *">
+          <TextBlock Grid.Column="0"
+                     Grid.Row="0"
+                     Text="Repeat"
+                     VerticalAlignment="Center"/>
+          <TextBlock Grid.Column="0"
+                     Grid.Row="2"
+                     Text="Vertical offset:"
+                     VerticalAlignment="Center"/>
+          <TextBlock Grid.Column="0"
+                     Grid.Row="5"
+                     Text="Horizontal offset:"
+                     VerticalAlignment="Center"/>
+
+          <CheckBox Grid.Column="2"
+                    Grid.Row="0"
+                    Name="repeatCheckBox"
+                    HorizontalAlignment="Right"
+                    Padding="0"/>
+          <ui:NumberBox Grid.Column="2"
+                        Grid.Row="2"
+                        SpinButtonPlacementMode="Compact"
+                        IsEnabled="{Binding #repeatCheckBox.IsChecked}"/>
+          <ui:NumberBox Grid.Column="2"
+                        Grid.Row="5"
+                        SpinButtonPlacementMode="Compact"
+                        IsEnabled="{Binding #repeatCheckBox.IsChecked}"/>
+        </Grid>
+      </Border>
+    </Grid>
+
+    <Border Grid.ColumnSpan="2"
+            Grid.Row="1"
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="4"
+            Margin="4"
+            Height="28">
+      <StackPanel Orientation="Horizontal"
+                  Spacing="32"
+                  VerticalAlignment="Center">
+        <TextBlock Margin="12, 0, 0, 0"
                    Text="Image.png"
                    Theme="{StaticResource BodyTextBlockStyle}"/>
-        <TextBlock Grid.Column="2"
-                   Text="300 428"
+        <TextBlock Text="300 428"
                    Theme="{StaticResource BodyTextBlockStyle}"/>
-      </Grid>
+      </StackPanel>
     </Border>
   </Grid>
-  
+
 </UserControl>

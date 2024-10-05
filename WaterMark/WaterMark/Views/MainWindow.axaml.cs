@@ -15,6 +15,11 @@ namespace WaterMark.Views
             TitleBar.ExtendsContentIntoTitleBar = true;
             TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
 
+            var dashArray = new List<double>() { 4, 4 };
+
+            var ds1 = new DashStyle(dashArray, 0);
+            var pen = new Pen(Brushes.Blue, 1, ds1);
+
             ChangeTransparency(3);
         }
 

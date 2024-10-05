@@ -35,31 +35,74 @@
 
     <Grid RowDefinitions="auto, *">
       <StackPanel Grid.Row="0" Orientation="Horizontal">
-        <Image Source="/Assets/avalonia-logo.ico" Width="16" Height="16" Margin="12, 6" />
+        <Image Source="/Assets/avalonia-logo.ico" Width="16" Height="16" Margin="12, 6, 8, 6" />
         <Menu>
           <MenuItem Header="Файл">
-            <MenuItem Header="_Open..."/>
+            <MenuItem Header="Открыть">
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="Open" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Последние документы">
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="Clock"/>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Сохранить">
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="Save" />
+              </MenuItem.Icon>
+            </MenuItem>
             <Separator/>
-            <MenuItem Header="_Exit"/>
+            <MenuItem Header="Выход">
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="Cancel" />
+              </MenuItem.Icon>
+            </MenuItem>
           </MenuItem>
-          <MenuItem Header="Правка">
-            <MenuItem Header="Undo"/>
-            <MenuItem Header="Redo"/>
+          <MenuItem Header="Редактирование">
+            <MenuItem Header="Отменить">
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="Undo" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Повторить">
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="Redo" />
+              </MenuItem.Icon>
+            </MenuItem>
           </MenuItem>
           <MenuItem Header="Вид">
             <MenuItem Header="Тема">
               <MenuItem Header="Как в системе" ToggleType="Radio"/>
               <MenuItem Header="Светлая" ToggleType="Radio"/>
               <MenuItem Header="Темная" ToggleType="Radio"/>
+
+              <MenuItem.Icon>
+                <ui:IconSourceElement IconSource="{StaticResource Color}"/>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Прозрачность">
+              <MenuItem Header="None" ToggleType="Radio"/>
+              <MenuItem Header="Mica" ToggleType="Radio"/>
+              <MenuItem Header="Acrylic" ToggleType="Radio"/>
+              <MenuItem Header="Acrylic (accent)" ToggleType="Radio"/>
+
+              <MenuItem.Icon>
+                <ui:SymbolIcon Symbol="ColorBackground" />
+              </MenuItem.Icon>
             </MenuItem>
           </MenuItem>
           <MenuItem Header="Справка">
-
+            <MenuItem Header="Репозиторий в github"/>
+            <MenuItem Header="О программе"/>
+            <Separator/>
+            <MenuItem Header="Нашли ошибку?"/>
           </MenuItem>
         </Menu>
       </StackPanel>
 
-      <views:MainView Grid.Row="1"/>
+      <views:MainView Grid.Row="1" Margin="4, 0, 4, 4"/>
     </Grid>
   </Panel>
 </Window>
