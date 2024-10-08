@@ -23,11 +23,18 @@
       <Button VerticalAlignment="Center"
               HorizontalAlignment="Center"
               Theme="{StaticResource TransparentButton}">
-        <StackPanel>
-          <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="Drag &amp; drop image" HorizontalAlignment="Center"/>
-          <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="or" HorizontalAlignment="Center"/>
-          <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="Select file from computer" HorizontalAlignment="Center"/>
-        </StackPanel>
+        <Panel>
+          <Rectangle Stroke="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
+                     StrokeDashArray="4, 8"
+                     StrokeThickness="2"
+                     RadiusX="4"
+                     RadiusY="4"/>
+          <StackPanel Margin="12">
+            <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="Drag &amp; drop image" HorizontalAlignment="Center"/>
+            <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="or" HorizontalAlignment="Center"/>
+            <TextBlock Theme="{StaticResource TitleTextBlockStyle}" Text="Select file from computer" HorizontalAlignment="Center"/>
+          </StackPanel>
+        </Panel>
       </Button>
     </Border>
 
@@ -80,7 +87,7 @@
                           SpinButtonPlacementMode="Compact"
                           Value="14"/>
           </Grid>
-          
+
           <Grid ColumnDefinitions="auto, *, auto">
             <TextBlock Grid.Column="0"
                        Text="Line height:"
@@ -89,13 +96,13 @@
                           SpinButtonPlacementMode="Compact"
                           Value="20"/>
           </Grid>
-          
+
           <Grid ColumnDefinitions="auto, *, auto">
             <TextBlock Grid.Column="0"
                        Text="Color:"
                        VerticalAlignment="Center"/>
             <ui:ColorPickerButton Grid.Column="2"
-                                  Color="Purple"/>
+                                  Color="Black"/>
           </Grid>
 
           <Grid Grid.Column="0"
@@ -116,9 +123,10 @@
             <ui:NumberBox Grid.Column="2"
                           Name="textOpacityNumberBox"
                           SpinButtonPlacementMode="Compact"
-                          Value="100"/>
+                          Value="100"
+                          SimpleNumberFormat="F2"/>
           </Grid>
-          
+
           <Slider Value="{Binding #textOpacityNumberBox.Value}"
                   Margin="0, -12, 0, 0"/>
 
@@ -133,29 +141,37 @@
         <StackPanel Spacing="8">
           <Button HorizontalAlignment="Stretch"
                   Theme="{StaticResource TransparentButton}">
-            <StackPanel>
-              <TextBlock Text="Drag &amp; drop watermark" HorizontalAlignment="Center"/>
-              <TextBlock Text="or" HorizontalAlignment="Center"/>
-              <TextBlock Text="Select from computer" HorizontalAlignment="Center"/>
-            </StackPanel>
+            <Panel>
+              <Rectangle Stroke="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
+                       StrokeDashArray="4, 8"
+                       StrokeThickness="1"
+                       RadiusX="4"
+                       RadiusY="4"/>
+              <StackPanel Margin="8">
+                <TextBlock Text="Drag &amp; drop watermark" HorizontalAlignment="Center"/>
+                <TextBlock Text="or" HorizontalAlignment="Center"/>
+                <TextBlock Text="Select from computer" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Panel>
           </Button>
 
           <Grid ColumnDefinitions="auto, auto, *, auto"
                 RowDefinitions="auto, 16, auto">
             <Panel Grid.Column="0"
                    Grid.RowSpan="3"
-                   Margin="0, 0, 8, 0">              
+                   Margin="0, 0, 8, 0">
               <Border BorderThickness="1 1 0 1"
                       CornerRadius="2"
                       BorderBrush="{DynamicResource ControlStrokeColorOnAccentTertiaryBrush}"
                       Margin="12, 16, -6, 16"/>
-              <ToggleButton Padding="2, 4">
+              <ToggleButton Padding="2, 4" 
+                            IsChecked="True">
                 <ui:SymbolIcon Symbol="Link"
                                FontSize="18"
                                RenderTransform="rotate(90deg)"/>
               </ToggleButton>
             </Panel>
-            
+
             <TextBlock Grid.Column="1"
                        Grid.Row="0"
                        VerticalAlignment="Center"
@@ -174,7 +190,7 @@
                           SpinButtonPlacementMode="Compact"
                           Value="10"/>
           </Grid>
-          
+
           <Grid Grid.Column="2"
                 ColumnDefinitions="auto, *, auto"
                 Margin="0, 4, 0, 0">
@@ -184,7 +200,8 @@
             <ui:NumberBox Grid.Column="2"
                           Name="opacityNumberBox"
                           SpinButtonPlacementMode="Compact"
-                          Value="100"/>
+                          Value="100"
+                          SimpleNumberFormat="F2"/>
           </Grid>
 
           <Slider Value="{Binding #opacityNumberBox.Value}"
