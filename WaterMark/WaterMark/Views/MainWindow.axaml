@@ -74,15 +74,15 @@
           </MenuItem>
           <MenuItem Header="_Settings">
             <MenuItem Header="Language">
-              <MenuItem Header="English" ToggleType="Radio"/>
+              <MenuItem Header="English" ToggleType="Radio" IsChecked="True"/>
               <MenuItem Header="Русский" ToggleType="Radio"/>
 
               <MenuItem.Icon>
                 <ui:SymbolIcon Symbol="Globe"/>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Theme">
-              <MenuItem Header="Default" ToggleType="Radio"/>
+            <MenuItem Header="Theme" Click="ChangeTheme">
+              <MenuItem Header="Default" ToggleType="Radio" IsChecked="True"/>
               <MenuItem Header="Light" ToggleType="Radio"/>
               <MenuItem Header="Dark" ToggleType="Radio"/>
 
@@ -90,11 +90,11 @@
                 <ui:IconSourceElement IconSource="{StaticResource Color}"/>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Backdrop">
-              <MenuItem Header="None" ToggleType="Radio"/>
+            <MenuItem Header="Backdrop" Click="ChangeBackdrop">
+              <MenuItem Header="None" ToggleType="Radio" />
               <MenuItem Header="Mica" ToggleType="Radio"/>
               <MenuItem Header="Acrylic" ToggleType="Radio"/>
-              <MenuItem Header="Acrylic (accent)" ToggleType="Radio"/>
+              <MenuItem Header="Acrylic (accent)" ToggleType="Radio" IsChecked="True"/>
 
               <MenuItem.Icon>
                 <ui:SymbolIcon Symbol="ColorBackground" />

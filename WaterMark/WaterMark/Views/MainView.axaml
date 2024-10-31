@@ -19,10 +19,11 @@
             Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
             CornerRadius="4"
             Margin="4">
-
-      <Button VerticalAlignment="Center"
+      <Button Name="SelectFileButton"
+              VerticalAlignment="Center"
               HorizontalAlignment="Center"
-              Theme="{StaticResource TransparentButton}">
+              Theme="{StaticResource DragDropButton}"
+              DragDrop.AllowDrop="True">
         <Panel>
           <Rectangle Stroke="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
                      StrokeDashArray="4, 8"
@@ -37,6 +38,20 @@
         </Panel>
       </Button>
     </Border>
+
+    <Canvas Name="MainCanvas"
+            Grid.Column="0"
+            Grid.Row="0"
+            Margin="4">
+      <Image Name="Image"
+             Width="{Binding #MainCanvas.Bounds.Width}"
+             Height="{Binding #MainCanvas.Bounds.Height}"/>
+      <Image Name="ImageWatermark"/>
+      <TextBlock Name="TextWatermark"/>
+      <Border Name="SelectionBorder"
+              BorderThickness="1"
+              BorderBrush="Cyan"/>
+    </Canvas>
 
     <Grid Grid.Column="1"
           Grid.Row="0"
@@ -138,9 +153,12 @@
               CornerRadius="4"
               Padding="12"
               IsVisible="{Binding !#textToggle.IsChecked}">
-        <StackPanel Spacing="8">
-          <Button HorizontalAlignment="Stretch"
-                  Theme="{StaticResource TransparentButton}">
+        <Grid RowDefinitions="100, *">
+          <Button Grid.Row="0"
+                  Name="SelectWatermarkButton"
+                  HorizontalAlignment="Stretch"
+                  Theme="{StaticResource DragDropButton}"
+                  DragDrop.AllowDrop="True">
             <Panel>
               <Rectangle Stroke="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
                        StrokeDashArray="4, 8"
@@ -155,58 +173,65 @@
             </Panel>
           </Button>
 
-          <Grid ColumnDefinitions="auto, auto, *, auto"
-                RowDefinitions="auto, 16, auto">
-            <Panel Grid.Column="0"
-                   Grid.RowSpan="3"
-                   Margin="0, 0, 8, 0">
-              <Border BorderThickness="1 1 0 1"
-                      CornerRadius="2"
-                      BorderBrush="{DynamicResource ControlStrokeColorOnAccentTertiaryBrush}"
-                      Margin="12, 16, -6, 16"/>
-              <ToggleButton Padding="2, 4" 
-                            IsChecked="True">
-                <ui:SymbolIcon Symbol="Link"
-                               FontSize="18"
-                               RenderTransform="rotate(90deg)"/>
-              </ToggleButton>
-            </Panel>
+          <Image Grid.Row="0"
+                 Name="WatermarkPreview">
+            
+          </Image>
 
-            <TextBlock Grid.Column="1"
-                       Grid.Row="0"
-                       VerticalAlignment="Center"
-                       Text="Width:"/>
-            <ui:NumberBox Grid.Column="3"
-                          Grid.Row="0"
-                          SpinButtonPlacementMode="Compact"
-                          Value="20"/>
+          <StackPanel Spacing="8" Grid.Row="1">
+            <Grid ColumnDefinitions="auto, auto, *, auto"
+                  RowDefinitions="auto, 16, auto">
+              <Panel Grid.Column="0"
+                     Grid.RowSpan="3"
+                     Margin="0, 0, 8, 0">
+                <Border BorderThickness="1 1 0 1"
+                        CornerRadius="2"
+                        BorderBrush="{DynamicResource ControlStrokeColorOnAccentTertiaryBrush}"
+                        Margin="12, 16, -6, 16"/>
+                <ToggleButton Padding="2, 4"
+                              IsChecked="True">
+                  <ui:SymbolIcon Symbol="Link"
+                                 FontSize="18"
+                                 RenderTransform="rotate(90deg)"/>
+                </ToggleButton>
+              </Panel>
 
-            <TextBlock Grid.Column="1"
-                       Grid.Row="2"
-                       VerticalAlignment="Center"
-                       Text="Height:"/>
-            <ui:NumberBox Grid.Column="3"
-                          Grid.Row="2"
-                          SpinButtonPlacementMode="Compact"
-                          Value="10"/>
-          </Grid>
+              <TextBlock Grid.Column="1"
+                         Grid.Row="0"
+                         VerticalAlignment="Center"
+                         Text="Width:"/>
+              <ui:NumberBox Grid.Column="3"
+                            Grid.Row="0"
+                            SpinButtonPlacementMode="Compact"
+                            Value="20"/>
 
-          <Grid Grid.Column="2"
-                ColumnDefinitions="auto, *, auto"
-                Margin="0, 4, 0, 0">
-            <TextBlock Grid.Column="0"
-                       Text="Opacity:"
-                       VerticalAlignment="Center"/>
-            <ui:NumberBox Grid.Column="2"
-                          Name="opacityNumberBox"
-                          SpinButtonPlacementMode="Compact"
-                          Value="100"
-                          SimpleNumberFormat="F2"/>
-          </Grid>
+              <TextBlock Grid.Column="1"
+                         Grid.Row="2"
+                         VerticalAlignment="Center"
+                         Text="Height:"/>
+              <ui:NumberBox Grid.Column="3"
+                            Grid.Row="2"
+                            SpinButtonPlacementMode="Compact"
+                            Value="10"/>
+            </Grid>
 
-          <Slider Value="{Binding #opacityNumberBox.Value}"
-                  Margin="0, -12, 0, 0"/>
-        </StackPanel>
+            <Grid Grid.Column="2"
+                  ColumnDefinitions="auto, *, auto"
+                  Margin="0, 4, 0, 0">
+              <TextBlock Grid.Column="0"
+                         Text="Opacity:"
+                         VerticalAlignment="Center"/>
+              <ui:NumberBox Grid.Column="2"
+                            Name="opacityNumberBox"
+                            SpinButtonPlacementMode="Compact"
+                            Value="100"
+                            SimpleNumberFormat="F2"/>
+            </Grid>
+
+            <Slider Value="{Binding #opacityNumberBox.Value}"
+                    Margin="0, -12, 0, 0"/>
+          </StackPanel>
+        </Grid>
       </Border>
       <Border Grid.Row="2"
               Grid.ColumnSpan="2"
