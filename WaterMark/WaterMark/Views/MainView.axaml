@@ -3,16 +3,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:WaterMark.ViewModels"
+             xmlns:converters="using:WaterMark.Converters"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WaterMark.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
+  <UserControl.Resources>
+    <converters:PercentageOpacityConverter x:Key="OpacityConverter"/>
+  </UserControl.Resources>
+
   <Grid ColumnDefinitions="7*, 2*" RowDefinitions="*, auto">
     <Border Grid.Column="0"
             Grid.Row="0"
@@ -42,15 +42,30 @@
     <Canvas Name="MainCanvas"
             Grid.Column="0"
             Grid.Row="0"
-            Margin="4">
+            Margin="4"
+            ClipToBounds="True">
       <Image Name="Image"
              Width="{Binding #MainCanvas.Bounds.Width}"
              Height="{Binding #MainCanvas.Bounds.Height}"/>
-      <Image Name="ImageWatermark"/>
-      <TextBlock Name="TextWatermark"/>
+      <Image Name="ImageWatermark"
+             Canvas.Left="0"
+             Canvas.Top="0"
+             Opacity="{Binding #imageOpacityNumberBox.Value, Converter={StaticResource OpacityConverter}}"/>
+      <TextBlock Name="TextWatermark"
+                 Canvas.Left="0"
+                 Canvas.Top="0"
+                 Text="{Binding #watermarkTextBox.Text}"
+                 FontFamily="{Binding #fontComboBox.SelectedItem}"
+                 FontSize="{Binding #fontSizeNumberBox.Value}"
+                 LineHeight="{Binding #lineHeightNumberBox.Value}"
+                 Foreground="{Binding #textColorPicker.Color}"
+                 Opacity="{Binding #textOpacityNumberBox.Value, Converter={StaticResource OpacityConverter}}"/>
       <Border Name="SelectionBorder"
+              Canvas.Left="0"
+              Canvas.Top="0"
               BorderThickness="1"
-              BorderBrush="Cyan"/>
+              BorderBrush="Cyan"
+              IsVisible="False"/>
     </Canvas>
 
     <Grid Grid.Column="1"
@@ -78,11 +93,18 @@
               Padding="12"
               IsVisible="{Binding #textToggle.IsChecked}">
         <StackPanel Spacing="8">
-          <TextBox Watermark="Your text"/>
+          <TextBox Name="watermarkTextBox"
+                   Watermark="Your text"/>
 
-          <ComboBox PlaceholderText="Font"
+          <ComboBox Name="fontComboBox"
+                    SelectedIndex="0"
+                    PlaceholderText="Font"
                     HorizontalAlignment="Stretch">
-
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="FontFamily">
+                <TextBlock Text="{Binding Name}" FontFamily="{Binding}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
           </ComboBox>
 
           <ui:CommandBar Padding="0"
@@ -99,6 +121,7 @@
                        Text="Font size:"
                        VerticalAlignment="Center"/>
             <ui:NumberBox Grid.Column="2"
+                          Name="fontSizeNumberBox"
                           SpinButtonPlacementMode="Compact"
                           Value="14"/>
           </Grid>
@@ -108,6 +131,7 @@
                        Text="Line height:"
                        VerticalAlignment="Center"/>
             <ui:NumberBox Grid.Column="2"
+                          Name="lineHeightNumberBox"
                           SpinButtonPlacementMode="Compact"
                           Value="20"/>
           </Grid>
@@ -117,20 +141,11 @@
                        Text="Color:"
                        VerticalAlignment="Center"/>
             <ui:ColorPickerButton Grid.Column="2"
+                                  Name="textColorPicker"
                                   Color="Black"/>
           </Grid>
 
-          <Grid Grid.Column="0"
-                  ColumnDefinitions="auto, *, auto">
-            <TextBlock Grid.Column="0"
-                       Text="Font size:"
-                       VerticalAlignment="Center"/>
-            <ui:NumberBox Grid.Column="2"
-                          SpinButtonPlacementMode="Compact"
-                          Value="14"/>
-          </Grid>
-          <Grid Grid.Column="2"
-                ColumnDefinitions="auto, *, auto"
+          <Grid ColumnDefinitions="auto, *, auto"
                 Margin="0, 4, 0, 0">
             <TextBlock Grid.Column="0"
                        Text="Opacity:"
@@ -139,10 +154,14 @@
                           Name="textOpacityNumberBox"
                           SpinButtonPlacementMode="Compact"
                           Value="100"
+                          Minimum="0"
+                          Maximum="100"
                           SimpleNumberFormat="F2"/>
           </Grid>
 
           <Slider Value="{Binding #textOpacityNumberBox.Value}"
+                  Minimum="0"
+                  Maximum="100"
                   Margin="0, -12, 0, 0"/>
 
         </StackPanel>
@@ -172,11 +191,6 @@
               </StackPanel>
             </Panel>
           </Button>
-
-          <Image Grid.Row="0"
-                 Name="WatermarkPreview">
-            
-          </Image>
 
           <StackPanel Spacing="8" Grid.Row="1">
             <Grid ColumnDefinitions="auto, auto, *, auto"
@@ -222,13 +236,13 @@
                          Text="Opacity:"
                          VerticalAlignment="Center"/>
               <ui:NumberBox Grid.Column="2"
-                            Name="opacityNumberBox"
+                            Name="imageOpacityNumberBox"
                             SpinButtonPlacementMode="Compact"
                             Value="100"
                             SimpleNumberFormat="F2"/>
             </Grid>
 
-            <Slider Value="{Binding #opacityNumberBox.Value}"
+            <Slider Value="{Binding #imageOpacityNumberBox.Value}"
                     Margin="0, -12, 0, 0"/>
           </StackPanel>
         </Grid>
