@@ -6,11 +6,13 @@
              xmlns:converters="using:WaterMark.Converters"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+             xmlns:uiconv="using:FluentAvalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WaterMark.Views.MainView"
              x:DataType="vm:MainViewModel">
   <UserControl.Resources>
     <converters:PercentageOpacityConverter x:Key="OpacityConverter"/>
+    <uiconv:ColorToBrushConv x:Key="ColorToBrushConv" />
   </UserControl.Resources>
 
   <Grid ColumnDefinitions="7*, 2*" RowDefinitions="*, auto">
@@ -58,7 +60,7 @@
                  FontFamily="{Binding #fontComboBox.SelectedItem}"
                  FontSize="{Binding #fontSizeNumberBox.Value}"
                  LineHeight="{Binding #lineHeightNumberBox.Value}"
-                 Foreground="{Binding #textColorPicker.Color}"
+                 Foreground="{Binding #textColorPicker.Color, Converter={StaticResource ColorToBrushConv}}}"
                  Opacity="{Binding #textOpacityNumberBox.Value, Converter={StaticResource OpacityConverter}}"/>
       <Border Name="SelectionBorder"
               Canvas.Left="0"

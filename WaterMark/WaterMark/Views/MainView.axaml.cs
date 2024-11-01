@@ -6,6 +6,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WaterMark.Views
 {
@@ -15,6 +16,7 @@ namespace WaterMark.Views
         private bool holding;
 
         private Point offset;
+        private Control lastSelectedControl;
 
         public MainView()
         {
@@ -32,10 +34,33 @@ namespace WaterMark.Views
             MainCanvas.PointerMoved += MainCanvas_PointerMoved;
             MainCanvas.PointerReleased += MainCanvas_PointerReleased;
 
+            ImageWatermark.PropertyChanged += WatermarkPropertyChanged;
+            TextWatermark.PropertyChanged += WatermarkPropertyChanged;
+
             fontComboBox.ItemsSource = FontManager.Current
                 .SystemFonts
                 .OrderBy(x => x.Name);
             fontComboBox.SelectedIndex = 0;
+        }
+
+        private async void WatermarkPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (SelectionBorder.IsVisible)
+            {
+                if (e.Property == TextBlock.TextProperty ||
+                e.Property == TextBlock.FontSizeProperty ||
+                e.Property == TextBlock.FontFamilyProperty ||
+                e.Property == TextBlock.LineHeightProperty ||
+                e.Property == TextBlock.FontStyleProperty ||
+                e.Property == TextBlock.FontWeightProperty ||
+                e.Property == WidthProperty ||
+                e.Property == HeightProperty)
+                {
+                    await Task.Delay(50); // Костыли наше всё
+                    SelectionBorder.Width = lastSelectedControl.Bounds.Width;
+                    SelectionBorder.Height = lastSelectedControl.Bounds.Height;
+                }
+            }
         }
 
         private void MainCanvas_PointerReleased(object? sender, PointerReleasedEventArgs e)
@@ -60,8 +85,6 @@ namespace WaterMark.Views
 
         private void MainCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
-            holding = true;
-
             if (e.Source is Control control)
             {
                 if (MainCanvas.Children.Contains(control) && control.Name != "Image")
@@ -74,12 +97,18 @@ namespace WaterMark.Views
 
                     SelectionBorder.IsVisible = true;
 
+                    holding = true;
                     offset = e.GetPosition(control);
+                    lastSelectedControl = control;
                 }
                 else
                 {
                     SelectionBorder.IsVisible = false;
                 }
+            }
+            else
+            {
+                SelectionBorder.IsVisible = false;
             }
         }
 

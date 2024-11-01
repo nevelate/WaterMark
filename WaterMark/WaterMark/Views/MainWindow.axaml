@@ -8,6 +8,7 @@
         xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WaterMark.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="WaterMark">
   <Panel>
@@ -102,16 +103,21 @@
             </MenuItem>
           </MenuItem>
           <MenuItem Header="_Reference">
-            <MenuItem Header="GitHub repository"/>
+            <MenuItem Header="GitHub repository"
+                      Command="{Binding OpenUrlCommand}"
+                      CommandParameter="https://github.com/nevelate/WaterMark"/>
             <MenuItem Header="About"/>
             <MenuItem Header="Credits"/>
             <Separator/>
-            <MenuItem Header="Found bug?"/>
+            <MenuItem Header="Found bug?"                      
+                      Command="{Binding OpenUrlCommand}"
+                      CommandParameter="https://github.com/nevelate/WaterMark/issues/new"/>
           </MenuItem>
         </Menu>
       </StackPanel>
 
-      <views:MainView Grid.Row="1" Margin="4, 0, 4, 4"/>
+      <views:MainView Grid.Row="1"
+                      Margin="4, 0, 4, 4"/>
     </Grid>
   </Panel>
 </Window>
