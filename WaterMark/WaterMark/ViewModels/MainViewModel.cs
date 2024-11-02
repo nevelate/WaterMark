@@ -1,7 +1,9 @@
-﻿using ReactiveUI;
+﻿using FluentAvalonia.UI.Controls;
+using ReactiveUI;
 using System.Diagnostics;
 using System.Reactive;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace WaterMark.ViewModels
 {
@@ -36,10 +38,14 @@ namespace WaterMark.ViewModels
         }
 
         public ReactiveCommand<string, Unit> OpenUrlCommand { get; init; }
+        public ReactiveCommand<Unit, Unit> ShowAboutDialogCommand { get; init; }
+        public ReactiveCommand<Unit, Unit> ShowCreditsDialogCommand { get; init; }
 
         public MainViewModel()
         {
             OpenUrlCommand = ReactiveCommand.Create<string>(OpenUrl);
+            ShowAboutDialogCommand = ReactiveCommand.CreateFromTask(ShowAboutDialog);
+            ShowCreditsDialogCommand = ReactiveCommand.CreateFromTask(ShowCreditsDialog);
         }
 
         public void OpenUrl(string url)
@@ -69,6 +75,32 @@ namespace WaterMark.ViewModels
                     throw;
                 }
             }
+        }
+
+        public async Task ShowAboutDialog()
+        {
+            var aboutDialog = new ContentDialog()
+            {
+                Title = "About",
+                Content = "Watermark 0.1.1 by nevelate",
+                IsPrimaryButtonEnabled = false,
+                IsSecondaryButtonEnabled = false,
+                CloseButtonText = "Close",
+            };
+            await aboutDialog.ShowAsync();
+        }
+
+        public async Task ShowCreditsDialog()
+        {
+            var creditsDialog = new ContentDialog()
+            {
+                Title = "Credits",
+                Content = "To be added",
+                IsPrimaryButtonEnabled = false,
+                IsSecondaryButtonEnabled = false,
+                CloseButtonText = "Close",
+            };
+            await creditsDialog.ShowAsync();
         }
     }
 }
